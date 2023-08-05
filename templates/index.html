@@ -1,13 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Loan Eligibility Prediction</title>
-</head>
-<body>
-    <h1>Loan Eligibility Prediction</h1>
-    <p>Please wait while the prediction model is loading...</p>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,39 +5,61 @@
 </head>
 <body>
     <h1>Loan Eligibility Prediction</h1>
-    <form action="/predict" method="post">
-        <label for="gender">Gender (Male/Female):</label>
-        <input type="text" id="gender" name="gender" required><br>
+    <form id="loanForm" action="/predict" method="post">
+        <label for="gender">Gender (Male / Female):</label>
+        <input type="checkbox" id="gender" name="gender" value="Male">
+        <label for="gender">Male</label>
+        <input type="checkbox" id="gender" name="gender" value="Female">
+        <label for="gender">Female</label><br>
 
         <label for="married">Married (Yes/No):</label>
-        <input type="text" id="married" name="married" required><br>
-
-        <label for="dependents">Dependents:</label>
+        <input type="checkbox" id="married" name="married" value="Yes">
+        <label for="married">Yes</label>
+        <input type="checkbox" id="married" name="married" value="No">
+        <label for="married">No</label><br>
+        
+        <label for="dependents">Dependants (Number of Dependants as a whole Number):</label>
         <input type="text" id="dependents" name="dependents" required><br>
-
+        
         <label for="education">Education (Graduate/Not Graduate):</label>
-        <input type="text" id="education" name="education" required><br>
-
+        <input type="checkbox" id="education" name="education" value="Graduate">
+        <label for="education">Graduate</label>
+        <input type="checkbox" id="education" name="education" value="Not Graduate">
+        <label for="education">Not Graduate</label><br>
+        
         <label for="self_employed">Self Employed (Yes/No):</label>
-        <input type="text" id="self_employed" name="self_employed" required><br>
-
-        <label for="applicant_income">Applicant Income:</label>
+        <input type="checkbox" id="self_employed" name="self_employed" value="Yes">
+        <label for="self_employed">Yes</label>
+        <input type="checkbox" id="self_employed" name="self_employed" value="No">
+        <label for="self_employed">No</label><br>
+        
+        <label for="applicant_income">Applicant Income in Thousands of AUD:</label>
         <input type="text" id="applicant_income" name="applicant_income" required><br>
-
-        <label for="coapplicant_income">Coapplicant Income:</label>
+        
+        <label for="coapplicant_income">Coapplicant Income (In Thousands of Dollars):</label>
         <input type="text" id="coapplicant_income" name="coapplicant_income" required><br>
-
-        <label for="loan_amount">Loan Amount:</label>
+        
+        <label for="loan_amount">Loan Amount  (In Thousands of Dollars):</label>
         <input type="text" id="loan_amount" name="loan_amount" required><br>
-
-        <label for="loan_amount_term">Loan Amount Term:</label>
+        
+        <label for="loan_amount_term">Loan Amount Term (In Months):</label>
         <input type="text" id="loan_amount_term" name="loan_amount_term" required><br>
+        
+        <label for="credit_history">Credit History:</label>
+        <input type="checkbox" id="credit_history" name="credit_history" value="0">
+        <label for="credit_history">Not Provided</label>
+        <input type="checkbox" id="credit_history" name="credit_history" value="1">
+        <label for="credit_history">Provided</label><br>
 
-        <label for="credit_history">Credit History (0/1):</label>
-        <input type="text" id="credit_history" name="credit_history" required><br>
-
-        <label for="property_area">Property Area (Rural/Semiurban/Urban):</label>
-        <input type="text" id="property_area" name="property_area" required><br>
+        <label for="property_area">Property Area:</label>
+        <input type="checkbox" id="property_area" name="property_area" value="Rural">
+        <label for="property_area">Rural</label>
+        <input type="checkbox" id="property_area" name="property_area" value="Semiurban">
+        <label for="property_area">Semiurban</label>
+        <input type="checkbox" id="property_area" name="property_area" value="Urban">
+        <label for="property_area">Urban</label><br>
+        <br>
+        <br>
 
         <input type="submit" value="Submit">
     </form>
@@ -55,8 +67,36 @@
     <!-- Add a section to display the prediction results -->
     <div id="prediction_result">
         {% if prediction %}
-            <p>Prediction: {{ prediction }}</p>
+            <p>Prediction: {{ data.prediction }}</p>
         {% endif %}
     </div>
+
+    <!-- JavaScript code -->
+    <script>
+        // Function to handle form submission
+        function submitForm() {
+            const form = document.getElementById('loanForm');
+            const formData = new FormData(form);
+            console.log(formData);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the prediction result on the page
+                const predictionResult = document.getElementById('prediction_result');
+                predictionResult.innerHTML = `<p>Prediction: ${data.prediction}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        // Attach form submission handler
+        document.getElementById('loanForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+            submitForm();
+        });
+    </script>
 </body>
 </html>
