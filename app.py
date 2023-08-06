@@ -69,13 +69,14 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import joblib
+from time import sleep
 
 data = pd.read_csv('Datasets/ETL_Completed_LoanApprovalPrediction.csv')
 
 app = Flask(__name__)
 
 rf_model = joblib.load('RandomForest/rf_model.pkl')  # Load the trained RandomForestClassifier model here
-# label_encoder = joblib.load('RandomForest/label_encoder.pkl')  # Load the LabelEncoder used for categorical variables here
+#label_encoder = joblib.load('RandomForest/label_encoder.pkl')  # Load the LabelEncoder used for categorical variables here
 
 @app.route('/')
 def index():
@@ -83,12 +84,16 @@ def index():
 
 @app.route('/predict', methods=['POST', 'GET'])
 def predict():
+    print(request.form)
+    sleep(5)
     try:
         user_data = {}
         form_keys = ['Gender', 'Married', 'Dependents', 'Education', 'Self_Employed', 'ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term', 'Credit_History', 'Property_Area']
         for col in form_keys:
             user_data[col] = request.form.get(col)
-
+        print("@"*80)
+        print(user_data)
+        #sleep(5)
         # Convert categorical variables to numerical using the loaded label encoder
         label_encoder = LabelEncoder()
         categorical_columns = ['Gender', 'Married', 'Education', 'Self_Employed', 'Property_Area']
@@ -114,7 +119,9 @@ def predict():
         user_data = {col: user_data[col] for col in ordered_columns}
 
         # Print user_data for debugging
+        print("/"*80)
         print("User Data:", user_data)
+        #sleep(5)
 
         # Make predictions
         user_pred = rf_model.predict([list(user_data.values())])
