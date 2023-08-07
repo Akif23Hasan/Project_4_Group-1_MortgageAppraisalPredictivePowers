@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Loan Eligibility Prediction</title>
@@ -17,7 +17,7 @@
         <label for="married">Yes</label>
         <input type="checkbox" id="Married" name="Married" value="No">
         <label for="married">No</label><br>
-        <!-- Problem -->
+        Problem
         <label for="dependents">Dependants (total number of dependants):</label>
         <input type="text" id="Dependents" name="Dependents" required><br>
         
@@ -32,16 +32,16 @@
         <label for="Self_Employed">Yes</label>
         <input type="checkbox" id="Self_Employed" name="Self_Employed" value="No">
         <label for="Self_Employed">No</label><br>
-        <!-- Problem -->
+        Problem
         <label for="ApplicantIncome">Applicant Income (per month):</label>
         <input type="number" id="ApplicantIncome" name="ApplicantIncome" required><br>
-        <!-- Problem -->
+        Problem
         <label for="CoapplicantIncome">Co-applicant Income (per month):</label>
         <input type="number" id="CoapplicantIncome" name="CoapplicantIncome" required><br>
-        <!-- Problem -->
+        Problem
         <label for="Loan Amount">Loan Amount  (in Thousands of dollars):</label>
         <input type="text" id="LoanAmount" name="LoanAmount" required><br>
-        <!-- Problem -->
+        Problem
         <label for="Loan_Amount_Term">Loan Term (number of months):</label>
         <input type="text" id="Loan_Amount_Term" name="Loan_Amount_Term" required><br>
         
@@ -64,14 +64,14 @@
         <input type="submit" value="Submit">
     </form>
 
-    <!-- PRediction Resutls -->
+    PRediction Resutls
     <div id="prediction_result">
         {% if prediction %}
             <p>Prediction: {{ data.prediction }}</p>
         {% endif %}
     </div>
 
-    <!-- Java Script, we need to separate the files, one htlml  -->
+    Java Script, we need to separate the files, one htlml 
     <script>
         // Function to handle form submission
         function submitForm() {
@@ -101,5 +101,213 @@
     </script>
    
 </body>
-</html>
+</html> -->
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Eligibility Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: auto;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional styling for prediction result */
+        #prediction_result {
+            position: fixed;
+            top: 50%;
+            right: 400px; /* Moved to the left */
+            transform: translateY(-50%);
+            text-align: center;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Moved prediction result output to the left and increased text size */
+        #prediction_text {
+            margin-right: 20px; /* Add some spacing from the right */
+            font-size: 18px; /* Increase text size */
+        }
+    </style>
+</head>
+<body>
+    <h1>Loan Eligibility Prediction</h1>
+    <form id="loanForm" action="/predict" method="post">
+        <div class="form-group">
+            <label for="gender">Gender (Male / Female):</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="GenderMale" name="Gender" value="1">
+                <label class="form-check-label" for="GenderMale">Male</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="GenderFemale" name="Gender" value="0">
+                <label class="form-check-label" for="GenderFemale">Female</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="married">Married (Yes / No):</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="MarriedYes" name="Married" value="Yes">
+                <label class="form-check-label" for="MarriedYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="MarriedNo" name="Married" value="No">
+                <label class="form-check-label" for="MarriedNo">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dependents">Dependents (total number of dependents):</label>
+            <input type="text" class="form-control" id="Dependents" name="Dependents" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Education">Education (Graduate / Not Graduate):</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="EducationGrad" name="Education" value="Graduate">
+                <label class="form-check-label" for="EducationGrad">Graduate</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="EducationNotGrad" name="Education" value="Not Graduate">
+                <label class="form-check-label" for="EducationNotGrad">Not Graduate</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Self_Employed">Self Employed (Yes / No):</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="SelfEmployedYes" name="Self_Employed" value="Yes">
+                <label class="form-check-label" for="SelfEmployedYes">Yes</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="SelfEmployedNo" name="Self_Employed" value="No">
+                <label class="form-check-label" for="SelfEmployedNo">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ApplicantIncome">Applicant Income (per month):</label>
+            <input type="number" class="form-control" id="ApplicantIncome" name="ApplicantIncome" required>
+        </div>
+
+        <div class="form-group">
+            <label for="CoapplicantIncome">Co-applicant Income (per month):</label>
+            <input type="number" class="form-control" id="CoapplicantIncome" name="CoapplicantIncome" required>
+        </div>
+
+        <div class="form-group">
+            <label for="LoanAmount">Loan Amount (in Thousands of dollars):</label>
+            <input type="text" class="form-control" id="LoanAmount" name="LoanAmount" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Loan_Amount_Term">Loan Term (number of months):</label>
+            <input type="text" class="form-control" id="Loan_Amount_Term" name="Loan_Amount_Term" required>
+        </div>
+        <div class="form-group">
+            <label for="Credit_History">Credit History:</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="CreditHistoryNotProvided" name="Credit_History" value="0">
+                <label class="form-check-label" for="CreditHistoryNotProvided">Not Provided</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="CreditHistoryProvided" name="Credit_History" value="1">
+                <label class="form-check-label" for="CreditHistoryProvided">Provided</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Property_Area">Property Area:</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="PropertyAreaRural" name="Property_Area" value="Rural">
+                <label class="form-check-label" for="PropertyAreaRural">Rural</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="PropertyAreaSemiurban" name="Property_Area" value="Semiurban">
+                <label class="form-check-label" for="PropertyAreaSemiurban">Semiurban</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="PropertyAreaUrban" name="Property_Area" value="Urban">
+                <label class="form-check-label" for="PropertyAreaUrban">Urban</label>
+            </div>
+        </br>    
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div id="prediction_result">
+        {% if prediction %}
+            <p>Prediction: {{ data.prediction }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function submitForm() {
+            const form = document.getElementById('loanForm');
+            const formData = new FormData(form);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const predictionResult = document.getElementById('prediction_result');
+                predictionResult.innerHTML = `<p>Prediction: ${data.prediction}</p>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        document.getElementById('loanForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            submitForm();
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
