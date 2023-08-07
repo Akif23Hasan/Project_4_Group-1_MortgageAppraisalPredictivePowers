@@ -72,5 +72,4 @@ By building a robust predictive model that considers key features and demographi
 
 This project demonstrates the potential of machine learning in the finance industry to streamline the loan approval process and promote financial inclusion.
 
-## GitHub
-* https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers.git 
+Project Presentation<https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/Homeloan%20Machine%20Learning%20Presentation_Final.pdf?
