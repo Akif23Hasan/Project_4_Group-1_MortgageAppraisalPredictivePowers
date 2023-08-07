@@ -177,11 +177,11 @@
         <div class="form-group">
             <label for="gender">Gender (Male / Female):</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="GenderMale" name="Gender" value="1">
+                <input type="radio" class="form-check-input" id="GenderMale" name="Gender" value=1>
                 <label class="form-check-label" for="GenderMale">Male</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="GenderFemale" name="Gender" value="0">
+                <input type="radio" class="form-check-input" id="GenderFemale" name="Gender" value=0>
                 <label class="form-check-label" for="GenderFemale">Female</label>
             </div>
         </div>
@@ -189,28 +189,28 @@
         <div class="form-group">
             <label for="married">Married (Yes / No):</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="MarriedYes" name="Married" value="Yes">
+                <input type="radio" class="form-check-input" id="MarriedYes" name="Married" value=1>
                 <label class="form-check-label" for="MarriedYes">Yes</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="MarriedNo" name="Married" value="No">
+                <input type="radio" class="form-check-input" id="MarriedNo" name="Married" value=0>
                 <label class="form-check-label" for="MarriedNo">No</label>
             </div>
         </div>
 
         <div class="form-group">
             <label for="dependents">Dependents (total number of dependents):</label>
-            <input type="text" class="form-control" id="Dependents" name="Dependents" required>
+            <input type="number" class="form-control" id="Dependents" name="Dependents" required>
         </div>
 
         <div class="form-group">
             <label for="Education">Education (Graduate / Not Graduate):</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="EducationGrad" name="Education" value="Graduate">
+                <input type="radio" class="form-check-input" id="EducationGrad" name="Education" value=1>
                 <label class="form-check-label" for="EducationGrad">Graduate</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="EducationNotGrad" name="Education" value="Not Graduate">
+                <input type="radio" class="form-check-input" id="EducationNotGrad" name="Education" value=0>
                 <label class="form-check-label" for="EducationNotGrad">Not Graduate</label>
             </div>
         </div>
@@ -218,11 +218,11 @@
         <div class="form-group">
             <label for="Self_Employed">Self Employed (Yes / No):</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="SelfEmployedYes" name="Self_Employed" value="Yes">
+                <input type="radio" class="form-check-input" id="SelfEmployedYes" name="Self_Employed" value=1>
                 <label class="form-check-label" for="SelfEmployedYes">Yes</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="SelfEmployedNo" name="Self_Employed" value="No">
+                <input type="radio" class="form-check-input" id="SelfEmployedNo" name="Self_Employed" value=0>
                 <label class="form-check-label" for="SelfEmployedNo">No</label>
             </div>
         </div>
@@ -239,21 +239,21 @@
 
         <div class="form-group">
             <label for="LoanAmount">Loan Amount (in Thousands of dollars):</label>
-            <input type="text" class="form-control" id="LoanAmount" name="LoanAmount" required>
+            <input type="number" class="form-control" id="LoanAmount" name="LoanAmount" required>
         </div>
 
         <div class="form-group">
             <label for="Loan_Amount_Term">Loan Term (number of months):</label>
-            <input type="text" class="form-control" id="Loan_Amount_Term" name="Loan_Amount_Term" required>
+            <input type="number" class="form-control" id="Loan_Amount_Term" name="Loan_Amount_Term" required>
         </div>
         <div class="form-group">
             <label for="Credit_History">Credit History:</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="CreditHistoryNotProvided" name="Credit_History" value="0">
+                <input type="radio" class="form-check-input" id="CreditHistoryNotProvided" name="Credit_History" value=0>
                 <label class="form-check-label" for="CreditHistoryNotProvided">Not Provided</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="CreditHistoryProvided" name="Credit_History" value="1">
+                <input type="radio" class="form-check-input" id="CreditHistoryProvided" name="Credit_History" value=1>
                 <label class="form-check-label" for="CreditHistoryProvided">Provided</label>
             </div>
         </div>
@@ -261,15 +261,15 @@
         <div class="form-group">
             <label for="Property_Area">Property Area:</label>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="PropertyAreaRural" name="Property_Area" value="Rural">
+                <input type="radio" class="form-check-input" id="PropertyAreaRural" name="Property_Area" value=0>
                 <label class="form-check-label" for="PropertyAreaRural">Rural</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="PropertyAreaSemiurban" name="Property_Area" value="Semiurban">
+                <input type="radio" class="form-check-input" id="PropertyAreaSemiurban" name="Property_Area" value=1>
                 <label class="form-check-label" for="PropertyAreaSemiurban">Semiurban</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="PropertyAreaUrban" name="Property_Area" value="Urban">
+                <input type="radio" class="form-check-input" id="PropertyAreaUrban" name="Property_Area" value=2>
                 <label class="form-check-label" for="PropertyAreaUrban">Urban</label>
             </div>
         </br>    

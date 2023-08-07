@@ -95,14 +95,13 @@ def predict():
         print(user_data)
         #sleep(5)
         # Convert categorical variables to numerical using the loaded label encoder
-        label_encoder = LabelEncoder()
-        categorical_columns = ['Gender', 'Married', 'Education', 'Self_Employed', 'Property_Area']
-        for col in categorical_columns:
-            user_data[col] = label_encoder.fit_transform([user_data[col]])[0]
+        # label_encoder = LabelEncoder()
+        # categorical_columns = ['Gender', 'Married', 'Education', 'Self_Employed', 'Property_Area']
+        # for col in categorical_columns:
+        #     user_data[col] = label_encoder.fit_transform([user_data[col]])[0]
 
         # Convert other numeric fields to appropriate data types
-        numeric_columns = ['Dependents', 'ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term', 'Credit_History']
-        for col in numeric_columns:
+        for col in user_data:
             if user_data[col]:
                 user_data[col] = float(user_data[col])
             else:
