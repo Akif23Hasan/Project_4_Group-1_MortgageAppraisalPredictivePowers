@@ -174,6 +174,9 @@
 <body>
     <h1>Loan Eligibility Prediction</h1>
     <form id="loanForm" action="/predict" method="post">
+        <div id="waiting_message" style="display: none;">
+            Waiting for form submission to validate prediction...
+        </div>
         <div class="form-group">
             <label for="gender">Gender (Male / Female):</label>
             <div class="form-check">
@@ -283,10 +286,30 @@
     </div>
 
     <script>
-        function submitForm() {
+        function validateFormInputs() {
             const form = document.getElementById('loanForm');
-            const formData = new FormData(form);
-            fetch('/predict', {
+            const inputs = form.getElementsByClassName('form-control');
+    
+            for (const input of inputs) {
+                if (input.value < 0) {
+                    alert('Please enter a positive value for all fields.');
+                    return false;
+                }
+            }
+    
+            return true;
+        }
+    
+    function submitForm() {
+            const form = document.getElementById('loanForm');
+            const isValid = validateFormInputs();
+
+            if (isValid) {
+                const waitingMessage = document.getElementById('waiting_message');
+                waitingMessage.style.display = 'block'; // Display the waiting message
+
+                const formData = new FormData(form);
+                fetch('/predict', {
                 method: 'POST',
                 body: formData
             })
@@ -294,12 +317,15 @@
             .then(data => {
                 const predictionResult = document.getElementById('prediction_result');
                 predictionResult.innerHTML = `<p>Prediction: ${data.prediction}</p>`;
+                waitingMessage.style.display = 'none'; // Hide the waiting message
             })
             .catch(error => {
                 console.error('Error:', error);
+                waitingMessage.style.display = 'none'; // Hide the waiting message
             });
         }
-
+    }
+    
         document.getElementById('loanForm').addEventListener('submit', function(event) {
             event.preventDefault();
             submitForm();
