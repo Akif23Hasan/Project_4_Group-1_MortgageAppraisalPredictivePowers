@@ -55,11 +55,17 @@ The purpose of the model is to promote financial inclusion and reduce biases, en
     * The Random Forest model achieves a balanced performance, lowers overfitting risk, and maintains a favourable precision-recall trade-off for both classes. On the other hand, the Logistic Regression model's high precision for class 0 is compromised by a lower recall, which could hinder accurate identification of class 0 instances. For a dependable and adaptable classification outcome, the Random Forest model is the recommended option.
 
 **Building the User interface: Loan Eligibility Prediction**
-1) User Input Form: The interface features a form where users provide information for loan eligibility prediction. The form includes checkboxes, text fields, and number inputs to capture various parameters like gender, marital status, dependents, education, income, loan amount, credit history, and property area.
-2) Form Submission: Upon form submission, the provided data is sent to a server endpoint ("/predict") using the POST method. The data is collected using FormData to handle multipart/form-data, ensuring accurate transmission.
-3) Prediction Results Display: The UI includes a div element ("prediction_result") to display prediction results. When the prediction is available, it dynamically updates the UI to show the prediction outcome.
-4) JavaScript Interaction: The JavaScript code handles form submission and prediction result updates. It prevents the form from submitting normally, sends data to the server, receives a JSON response, and updates the UI accordingly.
-5) Separation of Concerns: The script is enclosed within a script tag, enabling separation from the HTML for cleaner code organization. It attaches a form submission event listener to trigger the data submission process.
+1) **User Input Form**: The interface features a form where users provide information for loan eligibility prediction. The form includes checkboxes, text fields, and number inputs to capture various parameters like gender, marital status, dependents, education, income, loan amount, credit history, and property area.
+
+2) **Form Submission**: Upon form submission, the provided data is sent to a server endpoint ("/predict") using the POST method. The data is collected using FormData to handle multipart/form-data, ensuring accurate transmission.
+
+3) **Prediction Results Display**: The UI includes a div element ("prediction_result") to display prediction results. When the prediction is available, it dynamically updates the UI to show the prediction outcome.
+
+4) **JavaScript Interaction**: The JavaScript code handles form submission and prediction result updates. It prevents the form from submitting normally, sends data to the server, receives a JSON response, and updates the UI accordingly.
+
+5) **Server-Side Processing with joblib**: Upon receiving the form data, the server utilizes the joblib library to load a pre-trained machine learning model (e.g., a scikit-learn model saved as a .pkl file). This model processes the input data and generates a loan eligibility prediction. The prediction is then sent back to the client-side JavaScript for display.
+
+6) **Separation of Concerns**: The script is enclosed within a script tag, enabling separation from the HTML for cleaner code organization. It attaches a form submission event listener to trigger the data submission process. The server-side code handles model prediction and data processing using joblib.
 
 **To Run the User interface:**
 * In the terminal, run the app.py file by typing in: "python app.py"
