@@ -1,5 +1,3 @@
-# Project_4_Group-1_
-
 # UNVEILING THE FUTURE… Predicting Home Loan Approvals using Machine Learning
 By Pedro Azpurua, Akif Hasan, Henry Leighton, Graham Meadon
 
