@@ -113,6 +113,10 @@
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
 
         h1 {
             text-align: center;
@@ -172,7 +176,9 @@
     </style>
 </head>
 <body>
-    <h1>Loan Eligibility Prediction</h1>
+    <h1 style="text-align: center; margin-top: 40px; font-size: 60px; color: #000000;;">
+        Loan Eligibility Prediction
+    </h1>
     <form id="loanForm" action="/predict" method="post">
         <div id="waiting_message" style="display: none;">
             Waiting for form submission to validate prediction...
