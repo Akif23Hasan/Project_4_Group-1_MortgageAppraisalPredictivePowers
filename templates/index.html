@@ -63,15 +63,6 @@
             border-radius: 5px;
         }
 
-        #full_screen_image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-        }
-
         /* Moved prediction result output to the left and increased text size */
         #prediction_text {
             margin-right: 20px; /* Add some spacing from the right */
@@ -195,6 +186,13 @@
         {% endif %}
     </div>
 
+    <div id="imageContainer" style="display: none; text-align: center;">
+        <img id="approvedImage" src="https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/WebsitePhotos/ApprovedLoanApproval.png" alt="Approved" style="display: none;">
+        <img id="deniedImage" src="https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/WebsitePhotos/FailedLoanApproval.png" alt="Denied" style="display: none;">
+        <img id="failureImage" src="https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/WebsitePhotos/FailedFormSubmission.png" alt="Submission Failure" style="display: none;">
+    </div>
+
+
     <script>
         function validateFormInputs() {
             const form = document.getElementById('loanForm');
@@ -209,17 +207,21 @@
     
             return true;
         }
-    
-    function submitForm() {
-            const form = document.getElementById('loanForm');
-            const isValid = validateFormInputs();
+        
+        function submitForm() {
+        const form = document.getElementById('loanForm');
+        const isValid = validateFormInputs();
+        const imageContainer = document.getElementById('imageContainer');
+        const approvedImage = document.getElementById('approvedImage');
+        const deniedImage = document.getElementById('deniedImage');
+        const failureImage = document.getElementById('failureImage');
 
-            if (isValid) {
-                const waitingMessage = document.getElementById('waiting_message');
-                waitingMessage.style.display = 'block'; // Display the waiting message
+        if (isValid) {
+            const waitingMessage = document.getElementById('waiting_message');
+            waitingMessage.style.display = 'block';
 
-                const formData = new FormData(form);
-                fetch('/predict', {
+            const formData = new FormData(form);
+            fetch('/predict', {
                 method: 'POST',
                 body: formData
             })
@@ -227,20 +229,38 @@
             .then(data => {
                 const predictionResult = document.getElementById('prediction_result');
                 predictionResult.innerHTML = `<p>Prediction: ${data.prediction}</p>`;
-                waitingMessage.style.display = 'none'; // Hide the waiting message
+                waitingMessage.style.display = 'none';
+
+                // Show corresponding image based on prediction
+                imageContainer.style.display = 'block';
+                if (data.prediction === 'Approved') {
+                    approvedImage.style.display = 'block';
+                    deniedImage.style.display = 'none';
+                    failureImage.style.display = 'none';
+                } else if (data.prediction === 'Denied') {
+                    approvedImage.style.display = 'none';
+                    deniedImage.style.display = 'block';
+                    failureImage.style.display = 'none';
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
-                waitingMessage.style.display = 'none'; // Hide the waiting message
+                waitingMessage.style.display = 'none';
+
+                // Show failure image on submission error
+                imageContainer.style.display = 'block';
+                approvedImage.style.display = 'none';
+                deniedImage.style.display = 'none';
+                failureImage.style.display = 'block';
             });
         }
     }
-    
-        document.getElementById('loanForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            submitForm();
-        });
-    </script>
+
+    document.getElementById('loanForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        submitForm();
+    });
+</script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
