@@ -5,24 +5,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: Arial Narrow, sans-serif;
+            background-color: #F2F2F2;
         }
 
         h1 {
             text-align: center;
             margin-top: 20px;
+            color: #30384C;
         }
 
         form {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            border: 1px solid #ccc;
+            border: 5px solid #30384C;
             border-radius: 5px;
             background-color: #ffffff;
         }
@@ -31,13 +28,13 @@
         input[type="text"] {
             width: 100%;
             padding: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid #30384C;
             border-radius: 3px;
             margin-bottom: 10px;
         }
 
         input[type="submit"] {
-            background-color: #007bff;
+            background-color: #3D90D1;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -47,33 +44,73 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #3D90D1;
         }
 
         /* Additional styling for prediction result */
         #prediction_result {
+            display: none; /* Initially hidden */
             position: fixed;
             top: 50%;
-            right: 400px; /* Moved to the left */
+            right: 200px;
             transform: translateY(-50%);
             text-align: center;
             padding: 10px;
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
+            background-color: #ffffff;
+            border: 3px solid #fb5155;
             border-radius: 5px;
+        }
+
+        /* Style for the prediction text */
+        #prediction_result p {
+            font-size: 25px;
         }
 
         /* Moved prediction result output to the left and increased text size */
         #prediction_text {
-            margin-right: 20px; /* Add some spacing from the right */
-            font-size: 18px; /* Increase text size */
+            margin-right: 40px;
+            font-size: 60px;
         }
+
+        /* Added styling for fixed images container */
+        #fixed_images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 20%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #30384C;
+            border-right: 5px solid #fb5155;
+        }
+
+        /* Added styling for fixed images */
+        .fixed_image {
+            width: 250px;
+            height: 250px;
+            margin: 10px 0;
+            object-fit: cover;
+            background-color: white; /* Add white background to images */
+        }
+
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; margin-top: 40px; font-size: 60px; color: #000000;">
+    <div id="fixed_images">
+        <img class="fixed_image" src="https://assets-news.housing.com/news/wp-content/uploads/2020/10/05171914/How-to-use-Housing.com-home-loan-calculator-FB-1200x700-compressed.jpg" alt="Image 1">
+        <img class="fixed_image" src="https://res.akamaized.net/domain/image/upload/t_web/v1610576634/iStock-1186083060_cl9sjw.jpg" alt="Image 2">
+        <img class="fixed_image" src="https://www.fhanewsblog.com/wp-content/uploads/2016/08/139.jpg" alt="Image 3">
+        <img class="fixed_image" src="https://i1.wp.com/wbsociety.com/wp-content/uploads/re-HL-logo-v-RGB.png?fit=544%2C354&ssl=1" alt="Image 4">
+        <img class="fixed_image" src="https://s.yimg.com/ny/api/res/1.2/MvlIZbvC1ngCfHB9MjDi.w--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTM2MA--/https://s.yimg.com/os/creatr-uploaded-images/2023-03/5a23ef60-c6b8-11ed-b8ff-551e7218ffca" alt="Image 5">
+    </div>
+
+    <h1 style="text-align: center; margin-top: 60px; font-size: 75px; color: #30384c; font-family: 'Arial Narrow', sans-serif;">
         Loan Eligibility Prediction
     </h1>
+
     <form id="loanForm" action="/predict" method="post">
         <div id="waiting_message" style="display: none;">
             Waiting for form submission to validate prediction...
@@ -132,17 +169,17 @@
         </div>
 
         <div class="form-group">
-            <label for="ApplicantIncome">Applicant Income (per month):</label>
+            <label for="ApplicantIncome">Applicant Income ($AUD per month):</label>
             <input type="number" class="form-control" id="ApplicantIncome" name="ApplicantIncome" required>
         </div>
 
         <div class="form-group">
-            <label for="CoapplicantIncome">Co-applicant Income (per month):</label>
+            <label for="CoapplicantIncome">Co-applicant Income ($AUD per month):</label>
             <input type="number" class="form-control" id="CoapplicantIncome" name="CoapplicantIncome" required>
         </div>
 
         <div class="form-group">
-            <label for="LoanAmount">Loan Amount (in Thousands of dollars):</label>
+            <label for="LoanAmount">Loan Amount (in Thousands of $AUD):</label>
             <input type="number" class="form-control" id="LoanAmount" name="LoanAmount" required>
         </div>
 
@@ -182,14 +219,16 @@
 
     <div id="prediction_result">
         {% if prediction %}
-            <p>Prediction: {{ data.prediction }}</p>
+            <p style="font-size: 50px;">Prediction: {{ data.prediction }}</p>
         {% endif %}
     </div>
 
+    <div style="height: 20px;"></div>
+
     <div id="imageContainer" style="display: none; text-align: center;">
-        <img id="approvedImage" src="https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/WebsitePhotos/ApprovedLoanApproval.png" alt="Approved" style="display: none;">
-        <img id="deniedImage" src="https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/WebsitePhotos/FailedLoanApproval.png" alt="Denied" style="display: none;">
-        <img id="failureImage" src="https://github.com/Akif23Hasan/Project_4_Group-1_MortgageAppraisalPredictivePowers/blob/main/WebsitePhotos/FailedFormSubmission.png" alt="Submission Failure" style="display: none;">
+        <img id="approvedImage" src="https://imgtr.ee/images/2023/08/09/7c7bbdea5b347ec4e1bbaa5007b01d1b.jpeg" alt="Approved" style="display: none;">
+        <img id="deniedImage" src="https://imgtr.ee/images/2023/08/09/4d66e1053b99bb04f0bd79fc6b61822e.jpeg" alt="Denied" style="display: none;">
+        <img id="failureImage" src="https://imgtr.ee/images/2023/08/09/86c51a344a20195a6fb3e18e704e6df8.jpeg" alt="Submission Failure" style="display: none;">
     </div>
 
 
@@ -230,6 +269,11 @@
                 const predictionResult = document.getElementById('prediction_result');
                 predictionResult.innerHTML = `<p>Prediction: ${data.prediction}</p>`;
                 waitingMessage.style.display = 'none';
+
+                // Show the prediction result container
+                const predictionResultContainer = document.getElementById('prediction_result');
+                predictionResultContainer.style.display = 'block';
+
 
                 // Show corresponding image based on prediction
                 imageContainer.style.display = 'block';
